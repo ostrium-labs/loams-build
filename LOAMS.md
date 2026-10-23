@@ -25,11 +25,13 @@ Licences below were read from each project's LICENSE files on 2026-10-23.
 | Rolldown | bundler | MIT |
 | Vite | dev server and bundling | MIT |
 | Vitest | test runner | MIT |
-| Vite+ (VoidZero) | optional, on top of Vite | MIT (its repository and README say so); re-check before use |
+| Vite+ (VoidZero) | **recommended toolchain**: dev, check (Oxlint, Oxfmt, types), test (Vitest), build (Vite, Rolldown), pack (tsdown), `vp run` | MIT (`voidzero-dev/vite-plus` LICENSE, read 2026-10-23); 1.0.0 stable since 2026-09-28 |
 | SWC | where it fits | Apache-2.0 |
 | Biome | where it fits | MIT OR Apache-2.0 |
 
-The open default is plain Vite with Rolldown and Vitest. Vite+ is optional. VoidZero has talked about commercial offerings, so we re-check the terms before depending on anything from them. We do not copy code under BSL-like or source-available licences, and running such a tool needs a check first.
+**Vite+ is the recommended toolchain** (owner, 2026-10-23; Loams decision D1770). Plain Vite with Rolldown and Vitest stays the fallback, and our TypeScript rules must keep working with it: they call the standard tools that Vite+ bundles, not `vp`-only behaviour. Cloudflare acquired VoidZero in June 2026 and said Vite, Vitest, Rolldown, Oxc and Vite+ stay MIT; we re-read the LICENSE files before each upgrade. The Loams-side mapping is in [design 79: Void and Vite+](https://github.com/ostrium-labs/loams/blob/dev/docs/design/79-void-and-vite-plus.md) (under review in [ostrium-labs/loams#1108](https://github.com/ostrium-labs/loams/pull/1108); the design link works once it merges).
+
+We do not copy code under BSL-like or source-available licences, and running such a tool needs a check first.
 
 ## How we work: upstream-first
 
