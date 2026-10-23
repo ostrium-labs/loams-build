@@ -19,7 +19,7 @@ Licences below were read from each project's LICENSE files on 2026-10-23.
 
 | Tool | Role | Licence |
 |---|---|---|
-| Bun | runtime, test runner, package resolution | MIT, but it statically links JavaScriptCore, which is LGPL-2 (needs a check before we ship or bundle it) |
+| Bun | runtime, test runner, package resolution, and **AOT packaging** (`bun build --compile --bytecode`) | MIT, but it statically links JavaScriptCore, which is LGPL-2. A compiled binary carries that runtime, so a distributed one needs the LGPL-2 notice and relinking path (Loams D1794, proposed; counsel check Q1312) |
 | ts-rs | Rust-to-TypeScript types | MIT |
 | OXC | parser, transformer, oxlint | MIT |
 | Rolldown | bundler | MIT |
@@ -29,7 +29,9 @@ Licences below were read from each project's LICENSE files on 2026-10-23.
 | SWC | where it fits | Apache-2.0 |
 | Biome | where it fits | MIT OR Apache-2.0 |
 
-**Vite+ is the recommended toolchain** (owner, 2026-10-23; Loams decision D1770). Plain Vite with Rolldown and Vitest stays the fallback, and our TypeScript rules must keep working with it: they call the standard tools that Vite+ bundles, not `vp`-only behaviour. Cloudflare acquired VoidZero in June 2026 and said Vite, Vitest, Rolldown, Oxc and Vite+ stay MIT; we re-read the LICENSE files before each upgrade. The Loams-side mapping is in [design 79: Void and Vite+](https://github.com/ostrium-labs/loams/blob/dev/docs/design/79-void-and-vite-plus.md) (under review in [ostrium-labs/loams#1108](https://github.com/ostrium-labs/loams/pull/1108); the design link works once it merges).
+**Vite+ is the recommended toolchain** (owner, 2026-10-23; Loams decision D1770). Plain Vite with Rolldown and Vitest stays the fallback, and our TypeScript rules must keep working with it: they call the standard tools that Vite+ bundles, not `vp`-only behaviour. Cloudflare acquired VoidZero in June 2026 and said Vite, Vitest, Rolldown, Oxc and Vite+ stay MIT; we re-read the LICENSE files before each upgrade. The Loams-side mapping is in [design 79: Void and Vite+](https://github.com/ostrium-labs/loams/blob/dev/docs/design/79-void-and-vite-plus.md) (approved; [ostrium-labs/loams#1108](https://github.com/ostrium-labs/loams/pull/1108)).
+
+**Bun AOT is the way to package TypeScript outputs** (owner, 2026-10-23; Loams D1791). An app or tool becomes one executable with `bun build --compile --bytecode --minify --sourcemap --format=esm`, cross-compiled with `--target=bun-<os>-<arch>[-musl]`. Bytecode is tied to the Bun version that built it, so rules pin one Bun version per build. Native addons that can't be embedded for the target, and code that reads files beside itself, fall back to `bun run` or Node. Deno is not a target (Loams D1790).
 
 We do not copy code under BSL-like or source-available licences, and running such a tool needs a check first.
 
