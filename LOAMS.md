@@ -35,6 +35,14 @@ Licences below were read from each project's LICENSE files on 2026-10-23.
 
 We do not copy code under BSL-like or source-available licences, and running such a tool needs a check first.
 
+## Rust builds with Buck2 (in progress)
+
+Loams' Rust workspaces build, lint and test with Buck2 (owner, 2026-10-24). Cargo stays the source of truth: `reindeer` turns the Cargo workspace into BUCK files, and the JavaScript side stays on Nx. This fork holds what belongs with the tool, not with Loams:
+
+- [`pins/buck2.env`](pins/buck2.env): the upstream Buck2 release (checksummed), the prelude bundled in it, and the reindeer commit. We use upstream release binaries and the bundled prelude; we patch Buck2 only if something blocks.
+- `fixups/`: reindeer fixups for widely used crates with build scripts or native code, shared by every Loams workspace. Loams-specific fixups stay in the Loams repository.
+- `docs/`: notes on the setup.
+
 ## How we work: upstream-first
 
 - Upstream's `main` branch is left untouched and tracks `facebook/buck2`.
