@@ -1,0 +1,9 @@
+# Run build.rs as Cargo does. It only re-exports aws-lc-sys's `links`
+# metadata (DEP_AWS_LC_<version>_*), which Buck2 does not pass between build
+# scripts; nothing in the tree reads it back, so a placeholder satisfies it.
+[buildscript.run]
+rustc_link_lib = true
+rustc_link_search = true
+
+[buildscript.run.env]
+DEP_AWS_LC_0_45_0_INCLUDE = "unused"
